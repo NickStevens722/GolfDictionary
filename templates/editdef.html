@@ -32,7 +32,7 @@
             />
           </div>
         </div>
-        <fieldset class="form-group">
+        <fieldset class="form-group required">
           <div class="row">
             <legend class="col-form-label col-sm-2 pt-0">Type of Word</legend>
             <div class="col-sm-10">
@@ -55,6 +55,7 @@
                   name="type"
                   id="verb"
                   value="verb"
+                  required
                 />
                 <label class="form-check-label" for="verb">
                   Verb
@@ -69,6 +70,7 @@
           </div>
         </div>
       </form>
+      <a href="{{url_for('delete_def', def_id=defi._id)}}" class="btn btn-primary">Delete</a>
     </div>
   </div>
 </div>

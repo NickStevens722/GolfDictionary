@@ -1,5 +1,22 @@
 #menu-toggle {
-    background-color: #afafaf;
+    background-color: #f8f9fa;
     color: black;
-    border-color: #afafaf
+    border-color: #f8f9fa
+}
+
+#menu-toggle:hover {
+    background-color: #e8e8e8
+}
+
+.def_heading {
+    padding: 25px 0;
+}
+
+.def_body {
+    padding-bottom: 10px;
+    padding-left: 0;
+}
+
+.btn {
+    border-radius: 0%;
 }

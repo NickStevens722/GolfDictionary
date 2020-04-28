@@ -4,12 +4,12 @@
     
     <div class="row">
         <div class="col-md-5">
-            <h2 class="col-md-7">{{ definition.name }}</h2>
+            <h2 class="col-md-7 def_heading">{{ definition.name }}</h2>
         </div>
     </div>
 
     <div class="col-md-12">
-        <p>{{ definition.definition }}</p>
+        <p class="def_body">{{ definition.definition }}</p>
         <a class="btn btn-primary" href="{{url_for('edit_def', def_id=definition._id)}}" role="button">Edit Definition</a>
     </div>
 
