@@ -51,6 +51,24 @@ def insert_def():
     return redirect(url_for('definitions_list'))
 
 
+@app.route('/edit_def/<def_id>')
+def edit_def(def_id):
+    the_def = mongo.db.entries.find_one({"_id": ObjectId(def_id)})
+    return render_template('editdef.html', defi=the_def)
+
+
+@app.route('/update_def/<def_id>', methods=['POST'])
+def update_def(def_id):
+    defs = mongo.db.entries
+    defs.update({'_id': ObjectId(def_id)},
+    {
+        'name': request.form.get('name'),
+        'definition': request.form.get('definition'),
+        'type': request.form.get('type')
+    })
+    return redirect(url_for('definitions_list'))
+
+
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
         port=int(os.environ.get('PORT')),
