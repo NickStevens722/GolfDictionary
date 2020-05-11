@@ -29,14 +29,10 @@ def definitions_list():
     return render_template("definitions.html", definitions=mongo.db.entries.find())
 
 
-@app.route('/definitions/<name>')
-def definition(name):
-    definition = {}
-    definitions = mongo.db.entries.find()
-    for obj in definitions:
-        if obj["name"] == name:
-            definition = obj
-    return render_template("def.html", definition=definition)
+@app.route('/definitions/<def_id>')
+def definition(def_id):
+    the_def = mongo.db.entries.find_one({"_id": ObjectId(def_id)})
+    return render_template("def.html", definition=the_def)
 
 
 @app.route('/add_definition')
