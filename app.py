@@ -41,7 +41,7 @@ def definition(name):
 
 @app.route('/add_definition')
 def add_definition():
-    return render_template('adddefinition.html')
+    return render_template('adddefinition.html', pageTitle='Add Definition', defi={})
 
 
 @app.route('/insert_def', methods=['POST'])

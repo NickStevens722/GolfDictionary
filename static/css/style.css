@@ -1,3 +1,7 @@
+body {
+    font-family: 'Jost', sans-serif;
+}
+
 #menu-toggle {
     background-color: #f8f9fa;
     color: black;
@@ -19,4 +23,12 @@
 
 .btn {
     border-radius: 0%;
+}
+
+.card {
+    background-color: #fefefe
+}
+
+.title-padding {
+    padding: 25px 0;
 }
