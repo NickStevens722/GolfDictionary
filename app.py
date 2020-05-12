@@ -4,7 +4,7 @@ from flask_pymongo import PyMongo
 from bson.objectid import ObjectId
 from werkzeug.urls import url_parse
 from werkzeug.security import generate_password_hash, check_password_hash
-from flask_login import current_user, login_user, logout_user, login_required, LoginManager
+from flask_login import current_user, login_user, logout_user, login_required, LoginManager, UserMixin
 from flask_wtf import Form, FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
@@ -27,9 +27,9 @@ class RegistrationForm(FlaskForm):
 
 app = Flask(__name__)
 
-lm = LoginManager()
-lm.init_app(app)
-lm.login_view = 'login'
+lm = LoginManager(app)
+# lm.init_app(app)
+# lm.login_view = 'login'
 
 app.config['SECRET_KEY'] = "Your_secret_string"
 
@@ -94,7 +94,7 @@ class LoginForm(Form):
     password = PasswordField('Password', validators=[DataRequired()])
 
 
-class User():
+class User(UserMixin):
     def __init__(self, username):
         self.username = username
 
@@ -117,24 +117,38 @@ class User():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    # import pdb; pdb.set_trace()
+    if current_user.is_authenticated:
+        return redirect(url_for('home'))
+    form = LoginForm()
+    if form.validate_on_submit():
+        print("form.username", form.username)
+        user = mongo.db.users.find_one({"username": form.username.data})
+        print("user", user)
+        if user and User.validate_login(user['password'], form.password.data):
+            userJson = dumps([user['_id']])
+            print(userJson, "userJson")
+            user_obj = User(user[ObjectId("_id")])
+            print(user_obj)
+            login_user(user_obj) # Pass in user id
+            flash("Logged in successfully", category='success')
+            return redirect(url_for("home"))
+        else:
+            flash('Invalid username or password')
+    return render_template('login.html', title='Sign In', form=form)
+
+def _login():
     form = LoginForm()
     if request.method == 'POST' and form.validate_on_submit():
         user = mongo.db.users.find_one({"_id": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
+            print("This")
             user_obj = User(dumps([user['_id']]))
             login_user(user_obj)
             flash("Logged in successfully", category='success')
             return redirect(url_for("home"))
         flash("Wrong username or password", category='error')
     return render_template('login.html', title='login', form=form)
-
-
-@lm.user_loader
-def load_user(username):
-    u = mongo.db.users.find_one({"_id": username})
-    if not u:
-        return None
-    return User(u['_id'])
 
 
 @app.route('/logout')
@@ -148,7 +162,13 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         users = mongo.db.users
-        users.insert_one(request.form.to_dict())
+        formData = request.form.to_dict()
+        _user = {
+            'username': formData["username"],
+            'email': formData["email"],
+            'password': generate_password_hash(formData["password"]),
+            }
+        users.insert_one(_user)
         flash('Congratulations, you are now a registered user!')
         return redirect(url_for('login'))
     return render_template('register.html', title='Register', form=form)
@@ -159,6 +179,14 @@ def register():
 def edit_def(def_id):
     the_def = mongo.db.entries.find_one({"_id": ObjectId(def_id)})
     return render_template('editdef.html', defi=the_def)
+
+
+@lm.user_loader
+def load_user(username):
+    u = mongo.db.users.find_one({"_id": username})
+    if not u:
+        return None
+    return User(u['_id'])
 
 
 if __name__ == '__main__':
