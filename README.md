@@ -1,39 +1,70 @@
-<img src="https://codeinstitute.s3.amazonaws.com/fullstack/ci_logo_small.png" style="margin: 0;">
+# Golftionary
 
-Welcome Nick Stevens,
+Welcome to the ReadMe for the Golftionary. The site is a community driven resource for new and experienced players to learn more about the game of golf. At the moment functionality is basic, with the next goal to add being a coaching section for people to post videos and tips to help people improve.
+ 
+## UX
 
-This is the Code Institute student template for Gitpod. We have preinstalled all of the tools you need to get started. You can safely delete this README.md file, or change it for your own project.
+The deisgn of this website was designed to be relatively simple, so that the users could easily navigate the site and access the information they need.
 
-## Gitpod Reminders
+The defintions page is laid out using mason cards.
 
-To run a frontend (HTML, CSS, Javascript only) application in Gitpod, in the terminal, type:
+## User Stories
 
-`python3 -m http.server`
+### New Visitor
 
-A blue button should appear to click: *Make Public*,
+When entering the site the first piece of information that the user comes to is an explanation of what the site does and the information available to them.
 
-Another blue button should appear to click: *Open Browser*.
+Then using the links provided the user can then go onto the list of definitons and find out the infomration they are looking for.
 
-To run a backend Python file, type `python3 app.py`, if your Python file is named `app.py` of course.
+### Registered Visitor
 
-A blue button should appear to click: *Make Public*,
+If you are registered to the site you can then login and add/edit the definitions on the site.
 
-Another blue button should appear to click: *Open Browser*.
+## Features
 
-In Gitpod you have superuser security privileges by default. Therefore you do not need to use the `sudo` (superuser do) command in the bash terminal in any of the backend lessons.
+The main two features of the page are the information section and then the map section.
 
-## Updates Since The Instructional Video
+#### Information
 
-We continually tweak and adjust this template to help give you the best experience. Here are the updates since the original video was made:
+The information section of the page is broken into two parts, with two examples of city or beach locations. This section also contains a short description detailing some key points about the destinations.
 
-**April 16 2020:** The template now automatically installs MySQL instead of relying on the Gitpod MySQL image. The message about a Python linter not being installed has been dealt with, and the set-up files are now hidden in the Gitpod file explorer.
+There is also the current weather for the locations listed here. This weather data is collected using the OpenWeatherMap API and then displayed as a table on the page. This allows the user to make an informed choice about future holidays.
 
-**April 13 2020:** Added the _Prettier_ code beautifier extension instead of the code formatter built-in to Gitpod.
+#### Map
 
-**February 2020:** The initialisation files now _do not_ auto-delete. They will remain in your project. You can safely ignore them. They just make sure that your workspace is configured correctly each time you open it. It will also prevent the Gitpod configuration popup from appearing.
+The map is there for the users to be able to search any city/location in the world for hotels, restaurants and tourist attractions. The results of this search are then listed in a table to the side, or below on mobile, of the map.
 
-**December 2019:** Added Eventyret's Bootstrap 4 extension. Type `!bscdn` in a HTML file to add the Bootstrap boilerplate. Check out the <a href="https://github.com/Eventyret/vscode-bcdn" target="_blank">README.md file at the official repo</a> for more options.
+There are then markers on the map, which when clicked give the phone number, Google rating and a link to their website for the result.
 
---------
+#### Future Features
 
-Happy coding!
+The main feature that would need to be added to this are further pages hosting the companies store front, for the user to spend money with the company.
+
+The other thing to add would be the current time along with the current weather.
+
+## Technologies
+
+* Bootstrap 4 was used to make the structure of the page. This also helps with the responsiveness of the design.
+* MongoDB was used to host the database. This was chosen instead of SQL since not all the entries may be complete, so they will have different fields.
+
+## Testing
+
+The login function was tested manually. If you would like to test it wihtout registering please use the Username: NickStevens and the password: test
+
+HTML code was validated using https://validator.w3.org/
+
+CSS code was validated using https://jigsaw.w3.org/css-validator/
+
+## Depoloyment
+
+This site is hosted on GitHub and deployed directly from Heroku. Any commit updates or new releases will be deployed to that master branch. 
+
+To run locally, you can clone this repository directly into the editor of your choice by pasting git clone https://github.com/NickStevens722/Milestone-2 into your terminal. To unlink the site from the GitHub repository, type git remote rm origin into the terminal.
+
+The site is hosted on GitHub and can be run from there or locally by pasting the following link directly into your browser. https://nickstevens722.github.io/Milestone-2/
+
+To view the source code please click on the following GitHub address https://github.com/NickStevens722/Milestone-2
+
+## Credits
+
+Please Note that this site is currently for educational purposes only.

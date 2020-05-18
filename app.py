@@ -133,7 +133,7 @@ def login():
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        print("form.username", form.username)
+        print("form.username", form.username.data)
         user = mongo.db.users.find_one({"username": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
             user_obj = User(username=user['username'])
