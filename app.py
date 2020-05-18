@@ -25,11 +25,13 @@ class RegistrationForm(FlaskForm):
     submit = SubmitField('Register')
 
 
+
+
 app = Flask(__name__)
 
 lm = LoginManager(app)
 # lm.init_app(app)
-# lm.login_view = 'login'
+lm.login_view = 'login'
 
 app.config['SECRET_KEY'] = "Your_secret_string"
 
@@ -40,6 +42,43 @@ app.config["MONGO_URI"] = MONGODB_URI
 
 mongo = PyMongo(app)
 
+
+class LoginForm(Form):
+    """Login form to access writing and settings pages"""
+    username = StringField('Username', validators=[DataRequired()])
+    password = PasswordField('Password', validators=[DataRequired()])
+
+
+class User(UserMixin):
+    def __init__(self, username):
+        self.username = username
+
+    @staticmethod
+    def is_authenticated(self):
+        return True
+
+    @staticmethod
+    def is_active(self):
+        return True
+
+    @staticmethod
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return self.username
+
+    @staticmethod
+    def validate_login(password_hash, password):
+        return check_password_hash(password_hash, password)
+
+
+@lm.user_loader
+def load_user(username):
+    u = mongo.db.users.find_one({"_id": username})
+    if not u:
+        return None
+    return User(u['_id'])
 
 
 @app.route('/')
@@ -77,6 +116,8 @@ def update_def(def_id):
     {
         'name': request.form.get('name'),
         'definition': request.form.get('definition'),
+        'picture': request.form.get('picture'),
+        'pronunciation': request.form.get('pronunciation'),
         'type': request.form.get('type')
     })
     return redirect(url_for('definitions_list'))
@@ -88,31 +129,6 @@ def delete_def(def_id):
     return redirect(url_for('definitions_list'))
 
 
-class LoginForm(Form):
-    """Login form to access writing and settings pages"""
-    username = StringField('Username', validators=[DataRequired()])
-    password = PasswordField('Password', validators=[DataRequired()])
-
-
-class User(UserMixin):
-    def __init__(self, username):
-        self.username = username
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
-
-    def get_id(self):
-        return self.username
-
-    @staticmethod
-    def validate_login(password_hash, password):
-        return check_password_hash(password_hash, password)
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -124,31 +140,16 @@ def login():
     if form.validate_on_submit():
         print("form.username", form.username)
         user = mongo.db.users.find_one({"username": form.username.data})
-        print("user", user)
         if user and User.validate_login(user['password'], form.password.data):
-            userJson = dumps([user['_id']])
-            print(userJson, "userJson")
-            user_obj = User(user[ObjectId("_id")])
-            print(user_obj)
-            login_user(user_obj) # Pass in user id
-            flash("Logged in successfully", category='success')
+            user_obj = User(username=user['username'])
+            login_user(user_obj)  # Pass in user id
+            flash("Logged in successfully")
+            print(User, "This test")
             return redirect(url_for("home"))
         else:
             flash('Invalid username or password')
     return render_template('login.html', title='Sign In', form=form)
 
-def _login():
-    form = LoginForm()
-    if request.method == 'POST' and form.validate_on_submit():
-        user = mongo.db.users.find_one({"_id": form.username.data})
-        if user and User.validate_login(user['password'], form.password.data):
-            print("This")
-            user_obj = User(dumps([user['_id']]))
-            login_user(user_obj)
-            flash("Logged in successfully", category='success')
-            return redirect(url_for("home"))
-        flash("Wrong username or password", category='error')
-    return render_template('login.html', title='login', form=form)
 
 
 @app.route('/logout')
@@ -175,18 +176,10 @@ def register():
 
 
 @app.route('/edit_def/<def_id>')
-@login_required
 def edit_def(def_id):
     the_def = mongo.db.entries.find_one({"_id": ObjectId(def_id)})
     return render_template('editdef.html', defi=the_def)
 
-
-@lm.user_loader
-def load_user(username):
-    u = mongo.db.users.find_one({"_id": username})
-    if not u:
-        return None
-    return User(u['_id'])
 
 
 if __name__ == '__main__':

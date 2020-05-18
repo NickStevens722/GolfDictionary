@@ -23,16 +23,19 @@
       <div class="card-columns">
         {% for def in definitions %}
         <div class="card mb-4 shadow-sm">
+            {% if def.picture %}
+          <img class="card-img-top" src="{{def.picture}}" alt="Card image cap">
+          {% else %}
           <img class="card-img-top" src="{{url_for('static', filename='images/stock-image.jpg')}}" alt="Card image cap">
+          {% endif %}
           <div class="card-body">
-            <h6>{{def.name}}</h6>
-            <p class="card-text">
-              {{def.definition}}
+            <h5>{{def.name}}</h5>
+            <p class="card-text str">
+              For more information please hit view.
             </p>
             <div class="d-flex justify-content-between align-items-center">
               <div class="btn-group">
                 <a class="btn btn-sm btn-outline-secondary" href="/definitions/{{def._id}}" role="button">View</a>
-                <a class="btn btn-sm btn-outline-secondary" href="{{url_for('edit_def', def_id=def._id)}}" role="button">Edit</a>
               </div>
             </div>
           </div>

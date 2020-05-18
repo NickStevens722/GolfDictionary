@@ -1,5 +1,15 @@
 {% extends 'base.html' %} {% block content %}
 
+{% with messages = get_flashed_messages() %}
+         {% if messages %}
+            <ul>
+               {% for message in messages %}
+               <li>{{ message }}</li>
+               {% endfor %}
+            </ul>
+         {% endif %}
+      {% endwith %}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-6">
@@ -17,6 +27,8 @@
             terminology used in golf.</p>
             <p>If you are know a bit about a term used in golf and it is not on the site, feel free to add it by using 
             the link in the menu on the side.</p>
+            <p>Sadly only registered members are allowed to post or edit definitions. Luckily registering is super simple 
+            and can be done with the links in the menu.</p>
         </div>
         <div class="col-md-6">
             <img class="card-img-top" src="{{url_for('static', filename='images/sunset.jpg')}}" alt="Golfer playing into the sunset">
