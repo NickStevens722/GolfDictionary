@@ -22,25 +22,10 @@ If you are registered to the site you can then login and add/edit the definition
 
 ## Features
 
-The main two features of the page are the information section and then the map section.
+The main two features of the page are the definitions section and then the editing forms.
 
-#### Information
+The definitions page has the definitons laid out in in cards with the picture on top. If no picture is associated with the entry then  a default image is shown instead.
 
-The information section of the page is broken into two parts, with two examples of city or beach locations. This section also contains a short description detailing some key points about the destinations.
-
-There is also the current weather for the locations listed here. This weather data is collected using the OpenWeatherMap API and then displayed as a table on the page. This allows the user to make an informed choice about future holidays.
-
-#### Map
-
-The map is there for the users to be able to search any city/location in the world for hotels, restaurants and tourist attractions. The results of this search are then listed in a table to the side, or below on mobile, of the map.
-
-There are then markers on the map, which when clicked give the phone number, Google rating and a link to their website for the result.
-
-#### Future Features
-
-The main feature that would need to be added to this are further pages hosting the companies store front, for the user to spend money with the company.
-
-The other thing to add would be the current time along with the current weather.
 
 ## Technologies
 

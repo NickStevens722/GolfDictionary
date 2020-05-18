@@ -2,6 +2,10 @@ body {
     font-family: 'Jost', sans-serif;
 }
 
+.home-title {
+    font-family: 'Caveat', cursive;
+}
+
 #menu-toggle {
     background-color: #f8f9fa;
     color: black;
@@ -9,6 +13,10 @@ body {
 }
 
 #menu-toggle:hover {
+    background-color: #e8e8e8
+}
+
+#submit:hover {
     background-color: #e8e8e8
 }
 
@@ -21,9 +29,9 @@ body {
     padding-left: 0;
 }
 
-.flash_message {
+.flash-message {
     padding: 10px 0;
-    text-decoration: none;
+    list-style: none;
 }
 
 .btn {
@@ -41,7 +49,7 @@ body {
 }
 
 .title-padding {
-    padding: 25px 0;
+    padding: 25px 5px;
 }
 
 .banner {
