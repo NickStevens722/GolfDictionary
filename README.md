@@ -10,6 +10,16 @@ The design of this website was designed to be relatively simple, so that the use
 
 The defintions page is laid out using mason cards.
 
+## Mockups
+
+#### Definitions
+
+![Mockup](https://raw.githubusercontent.com/NickStevens722/GolfDictionary/master/static/images/Definitions.png "Mockup")
+
+#### Individual definition page
+
+![Mockup](https://raw.githubusercontent.com/NickStevens722/GolfDictionary/master/static/images/Definition.png "Mockup")
+
 ## User Stories
 
 ### New Visitor
