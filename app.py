@@ -65,16 +65,17 @@ class User(UserMixin):
     def get_id(self):
         return self.username
 
+    @staticmethod
     def validate_login(password_hash, password):
         return check_password_hash(password_hash, password)
 
 
 @lm.user_loader
 def load_user(username):
-    u = mongo.db.users.find_one({"_id": username})
+    u = mongo.db.users.find_one({"username": username})
     if not u:
         return None
-    return User(u['_id'])
+    return User(u['username'])
 
 
 @app.route('/')
@@ -94,6 +95,7 @@ def definition(def_id):
 
 
 @app.route('/add_definition')
+@login_required
 def add_definition():
     return render_template('adddefinition.html', pageTitle='Add Definition', defi={})
 
@@ -120,10 +122,10 @@ def update_def(def_id):
 
 
 @app.route('/delete_def/<def_id>')
+@login_required
 def delete_def(def_id):
     mongo.db.entries.remove({'_id': ObjectId(def_id)})
     return redirect(url_for('definitions_list'))
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -158,7 +160,7 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         users = mongo.db.users
-        existing_user = users.find_one({'username' : request.form['username']})
+        existing_user = users.find_one({'username': request.form['username']})
         if existing_user is None:
             formData = request.form.to_dict()
             _user = {
@@ -175,6 +177,7 @@ def register():
 
 
 @app.route('/edit_def/<def_id>')
+@login_required
 def edit_def(def_id):
     the_def = mongo.db.entries.find_one({"_id": ObjectId(def_id)})
     return render_template('editdef.html', defi=the_def)
