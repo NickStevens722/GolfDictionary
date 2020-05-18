@@ -6,8 +6,8 @@ from werkzeug.urls import url_parse
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import current_user, login_user, logout_user, login_required, LoginManager, UserMixin
 from flask_wtf import Form, FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, BooleanField
-from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
+from wtforms import StringField, PasswordField
+from wtforms.validators import DataRequired, Email, EqualTo
 
 
 from os import path
@@ -21,8 +21,6 @@ class RegistrationForm(FlaskForm):
     password = PasswordField('Password', validators=[DataRequired()])
     password2 = PasswordField(
         'Repeat Password', validators=[DataRequired(), EqualTo('password')])
-
-
 
 
 app = Flask(__name__)
@@ -95,7 +93,8 @@ def definition(def_id):
 @app.route('/add_definition')
 @login_required
 def add_definition():
-    return render_template('adddefinition.html', title='Add Definition', defi={})
+    return render_template('adddefinition.html',
+        title='Add Definition', defi={})
 
 
 @app.route('/insert_def', methods=['POST'])
@@ -135,13 +134,12 @@ def login():
         user = mongo.db.users.find_one({"username": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
             user_obj = User(username=user['username'])
-            login_user(user_obj)  # Pass in user id
+            login_user(user_obj)
             flash("Logged in successfully")
             return redirect(url_for("home"))
         else:
             flash('Invalid username or password')
     return render_template('login.html', title='Sign In', form=form)
-
 
 
 @app.route('/logout')
@@ -162,7 +160,7 @@ def register():
                 'username': formData["username"],
                 'email': formData["email"],
                 'password': generate_password_hash(formData["password"]),
-                }
+            }
             users.insert_one(_user)
             flash('Congratulations, you are now a registered user!')
             return redirect(url_for('login'))
@@ -178,8 +176,6 @@ def edit_def(def_id):
     return render_template('editdef.html', defi=the_def, title='Edit')
 
 
-
 if __name__ == '__main__':
     app.run(host=os.environ.get('IP'),
-        port=int(os.environ.get('PORT')),
-        debug=True)
+        port=int(os.environ.get('PORT')))

@@ -4,7 +4,9 @@ Welcome to the ReadMe for the Golftionary. The site is a community driven resour
  
 ## UX
 
-The deisgn of this website was designed to be relatively simple, so that the users could easily navigate the site and access the information they need.
+The design scope of this site was determined by the creator to be making the information as accessible as possible.
+
+The design of this website was designed to be relatively simple, so that the users could easily navigate the site and access the information they need.
 
 The defintions page is laid out using mason cards.
 
@@ -18,14 +20,17 @@ Then using the links provided the user can then go onto the list of definitons a
 
 ### Registered Visitor
 
-If you are registered to the site you can then login and add/edit the definitions on the site.
+I am a user who has been to the site before and has some new information that I wish to add to the site. So I visit the site and use the link provided to login, I know this has been successful because of the message which flashes up and the login button changes to a logout button.
 
 ## Features
 
 The main two features of the page are the definitions section and then the editing forms.
 
-The definitions page has the definitons laid out in in cards with the picture on top. If no picture is associated with the entry then  a default image is shown instead.
+The definitions page has the definitons laid out in in cards with the picture on top. If no picture is associated with the entry then a default image is shown instead. From there you can click on the view button to view more information and access the edit definition button.
 
+### Future Features
+
+The next thing I would add would be a user page where you could edit or delete your account, with the end goal being able to see what actions you have taken out on the site.
 
 ## Technologies
 
@@ -34,7 +39,9 @@ The definitions page has the definitons laid out in in cards with the picture on
 
 ## Testing
 
-The login function was tested manually. If you would like to test it wihtout registering please use the Username: NickStevens and the password: test
+The login function was tested manually. If you would like to test it wihtout registering please use the Username: NickStevens and the Password: test
+
+Or feel free to register your own account, the passwords are hashed but please use a unique password and a fake email address.
 
 CSS code was validated using https://jigsaw.w3.org/css-validator/
 
@@ -47,5 +54,7 @@ The app can be found at this link https://golf-dictionary.herokuapp.com/
 To view the source code please click on the following GitHub address https://github.com/NickStevens722/Golftionary
 
 ## Credits
+
+The CSS for the sidebar can be located Start Bootstrap - Simple Sidebar (https://startbootstrap.com/template-overviews/simple-sidebar)
 
 Please Note that this site is currently for educational purposes only.
