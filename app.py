@@ -8,7 +8,6 @@ from flask_login import current_user, login_user, logout_user, login_required, L
 from flask_wtf import Form, FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField
 from wtforms.validators import ValidationError, DataRequired, Email, EqualTo
-from bson.json_util import dumps
 
 
 from os import path
@@ -84,7 +83,7 @@ def home():
 
 @app.route('/definitions')
 def definitions_list():
-    return render_template("definitions.html", definitions=mongo.db.entries.find())
+    return render_template("definitions.html", title='Definitions', definitions=mongo.db.entries.find())
 
 
 @app.route('/definitions/<def_id>')
@@ -96,7 +95,7 @@ def definition(def_id):
 @app.route('/add_definition')
 @login_required
 def add_definition():
-    return render_template('adddefinition.html', pageTitle='Add Definition', defi={})
+    return render_template('adddefinition.html', title='Add Definition', defi={})
 
 
 @app.route('/insert_def', methods=['POST'])
@@ -129,16 +128,13 @@ def delete_def(def_id):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    # import pdb; pdb.set_trace()
     if current_user.is_authenticated:
         return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        print("form.username", form.username.data)
         user = mongo.db.users.find_one({"username": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
             user_obj = User(username=user['username'])
-            print("test", user_obj)
             login_user(user_obj)  # Pass in user id
             flash("Logged in successfully")
             return redirect(url_for("home"))
@@ -179,7 +175,7 @@ def register():
 @login_required
 def edit_def(def_id):
     the_def = mongo.db.entries.find_one({"_id": ObjectId(def_id)})
-    return render_template('editdef.html', defi=the_def)
+    return render_template('editdef.html', defi=the_def, title='Edit')
 
 
 

@@ -36,19 +36,15 @@ The definitions page has the definitons laid out in in cards with the picture on
 
 The login function was tested manually. If you would like to test it wihtout registering please use the Username: NickStevens and the password: test
 
-HTML code was validated using https://validator.w3.org/
-
 CSS code was validated using https://jigsaw.w3.org/css-validator/
 
 ## Depoloyment
 
-This site is hosted on GitHub and deployed directly from Heroku. Any commit updates or new releases will be deployed to that master branch. 
+This site is hosted on GitHub and deployed from Heroku. Any commit updates or new releases will be deployed to that master branch. 
 
-To run locally, you can clone this repository directly into the editor of your choice by pasting git clone https://github.com/NickStevens722/Milestone-2 into your terminal. To unlink the site from the GitHub repository, type git remote rm origin into the terminal.
+The app can be found at this link https://golf-dictionary.herokuapp.com/
 
-The site is hosted on GitHub and can be run from there or locally by pasting the following link directly into your browser. https://nickstevens722.github.io/Milestone-2/
-
-To view the source code please click on the following GitHub address https://github.com/NickStevens722/Milestone-2
+To view the source code please click on the following GitHub address https://github.com/NickStevens722/Golftionary
 
 ## Credits
 
