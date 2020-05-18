@@ -59,6 +59,8 @@ CSS code was validated using https://jigsaw.w3.org/css-validator/
 
 This site is hosted on GitHub and deployed from Heroku. Any commit updates or new releases will be deployed to that master branch. 
 
+There are environment variables set on Heroku such as the port at 5000 and the IP at 0.0.0.0. Also stored there is the access to the database so that the username and password and stored online.
+
 The app can be found at this link https://golf-dictionary.herokuapp.com/
 
 To view the source code please click on the following GitHub address https://github.com/NickStevens722/Golftionary
