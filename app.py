@@ -29,8 +29,8 @@ class RegistrationForm(FlaskForm):
 
 app = Flask(__name__)
 
-lm = LoginManager(app)
-# lm.init_app(app)
+lm = LoginManager()
+lm.init_app(app)
 lm.login_view = 'login'
 
 app.config['SECRET_KEY'] = "Your_secret_string"
@@ -53,22 +53,18 @@ class User(UserMixin):
     def __init__(self, username):
         self.username = username
 
-    @staticmethod
     def is_authenticated(self):
         return True
 
-    @staticmethod
     def is_active(self):
         return True
 
-    @staticmethod
     def is_anonymous(self):
         return False
 
     def get_id(self):
         return self.username
 
-    @staticmethod
     def validate_login(password_hash, password):
         return check_password_hash(password_hash, password)
 
@@ -130,7 +126,6 @@ def delete_def(def_id):
 
 
 
-
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     # import pdb; pdb.set_trace()
@@ -142,9 +137,9 @@ def login():
         user = mongo.db.users.find_one({"username": form.username.data})
         if user and User.validate_login(user['password'], form.password.data):
             user_obj = User(username=user['username'])
+            print("test", user_obj)
             login_user(user_obj)  # Pass in user id
             flash("Logged in successfully")
-            print(User, "This test")
             return redirect(url_for("home"))
         else:
             flash('Invalid username or password')
@@ -163,15 +158,19 @@ def register():
     form = RegistrationForm()
     if form.validate_on_submit():
         users = mongo.db.users
-        formData = request.form.to_dict()
-        _user = {
-            'username': formData["username"],
-            'email': formData["email"],
-            'password': generate_password_hash(formData["password"]),
-            }
-        users.insert_one(_user)
-        flash('Congratulations, you are now a registered user!')
-        return redirect(url_for('login'))
+        existing_user = users.find_one({'username' : request.form['username']})
+        if existing_user is None:
+            formData = request.form.to_dict()
+            _user = {
+                'username': formData["username"],
+                'email': formData["email"],
+                'password': generate_password_hash(formData["password"]),
+                }
+            users.insert_one(_user)
+            flash('Congratulations, you are now a registered user!')
+            return redirect(url_for('login'))
+        else:
+            flash('Username already in use')
     return render_template('register.html', title='Register', form=form)
 
 

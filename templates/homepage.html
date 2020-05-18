@@ -2,7 +2,7 @@
 
 {% with messages = get_flashed_messages() %}
          {% if messages %}
-            <ul>
+            <ul class="flash_message">
                {% for message in messages %}
                <li>{{ message }}</li>
                {% endfor %}
@@ -22,6 +22,9 @@
     <div class="row">
         <div class="col-md-6">
             <h4 class="title-padding">Welcome to The Goltionary.</h4>
+            {% if current_user.is_authenticated %}
+  Hi {{ current_user.name }}!
+{% endif %}
             <p>The Golftionary is a community driven site designed for beginners and those wanting to know 
             more about the wonderful sport of golf can discover information about some of the often confusing 
             terminology used in golf.</p>
